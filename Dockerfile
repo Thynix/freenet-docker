@@ -1,19 +1,18 @@
-FROM java:jre
+FROM openjdk:jre-alpine
 MAINTAINER Florent Daigniere <nextgens@freenetproject.org>
 
 ENV USER_ID 1000
 ENV GROUP_ID 1000
-ENV BUILD 1470
+ENV BUILD 1480
 
-RUN addgroup --system --gid $GROUP_ID freenet && adduser --system --uid=$USER_ID --gid=$GROUP_ID --home /freenet --shell /bin/bash --gecos "Freenet" freenet
+RUN addgroup -g $GROUP_ID -S freenet && adduser -S -u $USER_ID -G freenet -h /freenet -s /bin/sh -g "Freenet" freenet
 
 WORKDIR /freenet
 
-RUN apt-get update && apt-get install --no-install-recommends -y \
-  gnupg2 \
+RUN apk add --update \
+  gnupg \
   wget \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/cache/apk/*
 
 RUN mkdir -p data && chown -R freenet:freenet /freenet
 
