@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 cd /freenet
 if [ -e /freenet/data/update.sh ]
